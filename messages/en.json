@@ -1,0 +1,70 @@
+{
+  "common": {
+    "siteName": "Tagla Market",
+    "brand": "Galaxy Mart",
+    "getStarted": "Get Started",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "forgotPassword": "Forgot Password?",
+    "submit": "Submit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "back": "Back",
+    "loading": "Loading...",
+    "name": "Name",
+    "phone": "Phone",
+    "address": "Address",
+    "actions": "Actions",
+    "status": "Status",
+    "price": "Price",
+    "date": "Date"
+  },
+  "landing": {
+    "heroTitle": "Welcome to Tagla Market",
+    "heroSubtitle": "A universe of products, sellers, and resellers — powered by Galaxy Mart",
+    "heroDescription": "List products, resell across the galaxy, or shop directly. One platform, endless possibilities.",
+    "ctaButton": "Get Started",
+    "featuresTitle": "Why Tagla Market?"
+  },
+  "auth": {
+    "loginTitle": "Login to your account",
+    "registerTitle": "Create your account",
+    "chooseRole": "How do you want to join?",
+    "roleSeller": "List Products (Seller)",
+    "roleSellerDesc": "I want to list and sell my own products",
+    "roleReseller": "Customer / Reseller / Dropshipper",
+    "roleResellerDesc": "I want to shop or resell products for commission",
+    "fullName": "Full Name",
+    "alreadyHaveAccount": "Already have an account?",
+    "noAccount": "Don't have an account?",
+    "resetPasswordTitle": "Reset your password",
+    "resetPasswordDesc": "Enter your email and we'll send reset instructions",
+    "sendResetLink": "Send Reset Link",
+    "newPassword": "New Password",
+    "resetSuccess": "Password reset successfully"
+  },
+  "roles": {
+    "admin": "Admin",
+    "seller": "Seller",
+    "reseller": "Reseller / Customer",
+    "customer": "Customer"
+  },
+  "dashboard": {
+    "overview": "Overview",
+    "products": "Products",
+    "orders": "Orders",
+    "sellers": "Sellers",
+    "resellers": "Resellers / Customers",
+    "categories": "Categories",
+    "earnings": "Earnings",
+    "payments": "Payments",
+    "kyc": "KYC Verification",
+    "bankDetails": "Bank Details",
+    "priceRequests": "Price Change Requests",
+    "settings": "Settings"
+  }
+}
