@@ -10,9 +10,10 @@ import ProductsTable from "@/components/admin/ProductsTable";
 import OrdersTable from "@/components/admin/OrdersTable";
 import PriceAdjustModal from "@/components/admin/PriceAdjustModal";
 import BulkAdjust from "@/components/admin/BulkAdjust";
+import PaymentRequestsTable from "@/components/admin/PaymentRequestsTable";
+import AdminBankDetails from "@/components/admin/AdminBankDetails";
 
-type Tab = "overview" | "sellers" | "resellers" | "products" | "orders" | "pricing";
-
+type Tab = "overview" | "sellers" | "resellers" | "products" | "orders" | "pricing" | "payments" | "bankdetails";
 export default function AdminDashboard() {
   const router = useRouter();
   const params = useParams();
