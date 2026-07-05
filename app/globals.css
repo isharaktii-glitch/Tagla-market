@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+  background-color: #05010f;
+  color: #f5f3ff;
+}
+
+.glass-card {
+  background: rgba(21, 9, 54, 0.55);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #8b5cf6, #00e5c7);
+  color: #05010f;
+  font-weight: 700;
+  transition: all 0.25s ease;
+}
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+}
+
+.orbit-ring {
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 50%;
+  position: absolute;
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-spin-slow {
+  animation: spin-slow 30s linear infinite;
+}
+@keyframes spin-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+.animate-spin-reverse {
+  animation: spin-reverse 45s linear infinite;
+}
