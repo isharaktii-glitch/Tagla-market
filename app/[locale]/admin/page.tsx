@@ -14,6 +14,7 @@ import PaymentRequestsTable from "@/components/admin/PaymentRequestsTable";
 import AdminBankDetails from "@/components/admin/AdminBankDetails";
 import PriceRequestModal from "@/components/admin/PriceRequestModal";
 import PriceRequestsHistory from "@/components/admin/PriceRequestsHistory";
+import KycPanel from "@/components/admin/KycPanel";
 
 type Tab =
   | "overview"
@@ -24,7 +25,8 @@ type Tab =
   | "pricing"
   | "payments"
   | "bankdetails"
-  | "pricerequests";
+  | "pricerequests"
+  | "kyc";
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -78,6 +80,7 @@ export default function AdminDashboard() {
     { key: "pricerequests", label: "📩 Price Requests" },
     { key: "payments", label: "💸 Payment Requests" },
     { key: "bankdetails", label: "🏦 Bank Details" },
+    { key: "kyc", label: "🪪 KYC" },
   ];
 
   return (
@@ -155,6 +158,8 @@ export default function AdminDashboard() {
           )}
 
           {tab === "bankdetails" && <AdminBankDetails />}
+
+          {tab === "kyc" && <KycPanel />}
         </div>
       </div>
 
