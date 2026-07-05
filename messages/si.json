@@ -1,0 +1,70 @@
+{
+  "common": {
+    "siteName": "Tagla Market",
+    "brand": "Galaxy Mart",
+    "getStarted": "ආරම්භ කරන්න",
+    "login": "පිවිසෙන්න",
+    "register": "ලියාපදිංචි වන්න",
+    "logout": "ඉවත් වන්න",
+    "email": "විද්‍යුත් තැපෑල",
+    "password": "මුරපදය",
+    "confirmPassword": "මුරපදය තහවුරු කරන්න",
+    "forgotPassword": "මුරපදය අමතකද?",
+    "submit": "යොමු කරන්න",
+    "save": "සුරකින්න",
+    "cancel": "අවලංගු කරන්න",
+    "back": "ආපසු",
+    "loading": "පූරණය වේ...",
+    "name": "නම",
+    "phone": "දුරකථන අංකය",
+    "address": "ලිපිනය",
+    "actions": "ක්‍රියා",
+    "status": "තත්ත්වය",
+    "price": "මිල",
+    "date": "දිනය"
+  },
+  "landing": {
+    "heroTitle": "Tagla Market වෙත සාදරයෙන් පිළිගනිමු",
+    "heroSubtitle": "නිෂ්පාදන, විකුණුම්කරුවන් සහ ප්‍රතිවිකුණුම්කරුවන්ගේ විශ්වයක් — Galaxy Mart මගින්",
+    "heroDescription": "නිෂ්පාදන ලැයිස්තුගත කරන්න, ප්‍රතිවිකුණන්න, හෝ කෙළින්ම මිලදී ගන්න. එක් වේදිකාවක්, අසීමිත හැකියාවන්.",
+    "ctaButton": "ආරම්භ කරන්න",
+    "featuresTitle": "ඇයි Tagla Market?"
+  },
+  "auth": {
+    "loginTitle": "ඔබේ ගිණුමට පිවිසෙන්න",
+    "registerTitle": "ඔබේ ගිණුම සාදන්න",
+    "chooseRole": "ඔබ එකතු වීමට කැමති ආකාරය කුමක්ද?",
+    "roleSeller": "නිෂ්පාදන ලැයිස්තුගත කරන්නා (Seller)",
+    "roleSellerDesc": "මට මගේම නිෂ්පාදන ලැයිස්තුගත කර විකුණීමට අවශ්‍යයි",
+    "roleReseller": "පාරිභෝගික / ප්‍රතිවිකුණුම්කරු / Dropshipper",
+    "roleResellerDesc": "මට මිලදී ගැනීමට හෝ කමිසන් සඳහා ප්‍රතිවිකුණීමට අවශ්‍යයි",
+    "fullName": "සම්පූර්ණ නම",
+    "alreadyHaveAccount": "දැනටමත් ගිණුමක් තිබේද?",
+    "noAccount": "ගිණුමක් නැද්ද?",
+    "resetPasswordTitle": "ඔබේ මුරපදය යළි සකසන්න",
+    "resetPasswordDesc": "ඔබේ විද්‍යුත් තැපෑල ඇතුළත් කරන්න, අපි උපදෙස් යවන්නෙමු",
+    "sendResetLink": "යළි සැකසුම් සබැඳිය යවන්න",
+    "newPassword": "නව මුරපදය",
+    "resetSuccess": "මුරපදය සාර්ථකව යළි සකසන ලදී"
+  },
+  "roles": {
+    "admin": "පාලක",
+    "seller": "විකුණුම්කරු",
+    "reseller": "ප්‍රතිවිකුණුම්කරු / පාරිභෝගික",
+    "customer": "පාරිභෝගික"
+  },
+  "dashboard": {
+    "overview": "දළ විශ්ලේෂණය",
+    "products": "නිෂ්පාදන",
+    "orders": "ඇණවුම්",
+    "sellers": "විකුණුම්කරුවන්",
+    "resellers": "ප්‍රතිවිකුණුම්කරුවන් / පාරිභෝගිකයන්",
+    "categories": "ප්‍රවර්ග",
+    "earnings": "ඉපැයීම්",
+    "payments": "ගෙවීම්",
+    "kyc": "KYC සත්‍යාපනය",
+    "bankDetails": "බැංකු විස්තර",
+    "priceRequests": "මිල වෙනස් කිරීමේ ඉල්ලීම්",
+    "settings": "සැකසුම්"
+  }
+}
