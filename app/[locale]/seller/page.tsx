@@ -73,6 +73,12 @@ export default function SellerDashboard() {
               My Listings
             </button>
             <button
+              onClick={() => setTab("orders")}
+              className={`px-4 py-2 rounded-full text-sm font-semibold ${tab === "orders" ? "bg-accent text-galaxy-950" : "bg-galaxy-800/60 text-galaxy-300"}`}
+            >
+              My Orders
+            </button>
+            <button
               onClick={() => setTab("bank")}
               className={`px-4 py-2 rounded-full text-sm font-semibold ${tab === "bank" ? "bg-accent text-galaxy-950" : "bg-galaxy-800/60 text-galaxy-300"}`}
             >
@@ -87,7 +93,11 @@ export default function SellerDashboard() {
             </div>
           )}
 
-          {tab === "bank" && (
+          {tab === "bank" && ( {tab === "orders" && (
+            <div className="max-w-5xl">
+              <SellerOrders />
+            </div>
+          )}
             <div className="max-w-md">
               <BankDetailsForm />
             </div>
