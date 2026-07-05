@@ -43,7 +43,7 @@ export default function RegisterPage() {
         setLoading(false);
         return;
       }
-      router.push(`/${locale}/${role === "seller" ? "seller" : "reseller"}`);
+      router.push(`/${locale}?registered=true`);
     } catch {
       setError("Network error");
       setLoading(false);
