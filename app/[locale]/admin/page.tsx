@@ -62,6 +62,8 @@ export default function AdminDashboard() {
     { key: "products", label: "🛍️ Products" },
     { key: "orders", label: "🧾 Orders" },
     { key: "pricing", label: "💹 Bulk Pricing" },
+    { key: "payments", label: "💸 Payment Requests" },
+    { key: "bankdetails", label: "🏦 Bank Details" },
   ];
 
   return (
