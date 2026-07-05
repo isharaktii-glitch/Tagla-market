@@ -12,8 +12,20 @@ import PriceAdjustModal from "@/components/admin/PriceAdjustModal";
 import BulkAdjust from "@/components/admin/BulkAdjust";
 import PaymentRequestsTable from "@/components/admin/PaymentRequestsTable";
 import AdminBankDetails from "@/components/admin/AdminBankDetails";
+import PriceRequestModal from "@/components/admin/PriceRequestModal";
+import PriceRequestsHistory from "@/components/admin/PriceRequestsHistory";
 
-type Tab = "overview" | "sellers" | "resellers" | "products" | "orders" | "pricing" | "payments" | "bankdetails";
+type Tab =
+  | "overview"
+  | "sellers"
+  | "resellers"
+  | "products"
+  | "orders"
+  | "pricing"
+  | "payments"
+  | "bankdetails"
+  | "pricerequests";
+
 export default function AdminDashboard() {
   const router = useRouter();
   const params = useParams();
@@ -23,6 +35,7 @@ export default function AdminDashboard() {
   const [tab, setTab] = useState<Tab>("overview");
   const [checking, setChecking] = useState(true);
   const [adjustProduct, setAdjustProduct] = useState<any>(null);
+  const [priceReqProduct, setPriceReqProduct] = useState<any>(null);
   const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
@@ -62,6 +75,7 @@ export default function AdminDashboard() {
     { key: "products", label: "🛍️ Products" },
     { key: "orders", label: "🧾 Orders" },
     { key: "pricing", label: "💹 Bulk Pricing" },
+    { key: "pricerequests", label: "📩 Price Requests" },
     { key: "payments", label: "💸 Payment Requests" },
     { key: "bankdetails", label: "🏦 Bank Details" },
   ];
@@ -112,7 +126,11 @@ export default function AdminDashboard() {
 
           {tab === "products" && (
             <div className="glass-card rounded-2xl p-6">
-              <ProductsTable key={refreshKey} onAdjust={setAdjustProduct} />
+              <ProductsTable
+                key={refreshKey}
+                onAdjust={setAdjustProduct}
+                onPriceRequest={setPriceReqProduct}
+              />
             </div>
           )}
 
@@ -123,6 +141,13 @@ export default function AdminDashboard() {
           )}
 
           {tab === "pricing" && <BulkAdjust />}
+
+          {tab === "pricerequests" && (
+            <div className="glass-card rounded-2xl p-6">
+              <PriceRequestsHistory />
+            </div>
+          )}
+
           {tab === "payments" && (
             <div className="glass-card rounded-2xl p-6">
               <PaymentRequestsTable />
@@ -138,6 +163,14 @@ export default function AdminDashboard() {
           product={adjustProduct}
           onClose={() => setAdjustProduct(null)}
           onSaved={() => setRefreshKey((k) => k + 1)}
+        />
+      )}
+
+      {priceReqProduct && (
+        <PriceRequestModal
+          product={priceReqProduct}
+          onClose={() => setPriceReqProduct(null)}
+          onSent={() => setRefreshKey((k) => k + 1)}
         />
       )}
     </main>
