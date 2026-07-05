@@ -123,6 +123,13 @@ export default function AdminDashboard() {
           )}
 
           {tab === "pricing" && <BulkAdjust />}
+          {tab === "payments" && (
+            <div className="glass-card rounded-2xl p-6">
+              <PaymentRequestsTable />
+            </div>
+          )}
+
+          {tab === "bankdetails" && <AdminBankDetails />}
         </div>
       </div>
 
