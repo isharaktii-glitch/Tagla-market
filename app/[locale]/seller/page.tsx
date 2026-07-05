@@ -3,40 +3,24 @@ import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import StarField from "@/components/StarField";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
-import StatsCards from "@/components/admin/StatsCards";
-import SellersTable from "@/components/admin/SellersTable";
-import ResellersTable from "@/components/admin/ResellersTable";
-import ProductsTable from "@/components/admin/ProductsTable";
-import OrdersTable from "@/components/admin/OrdersTable";
-import PriceAdjustModal from "@/components/admin/PriceAdjustModal";
-import BulkAdjust from "@/components/admin/BulkAdjust";
-import PaymentRequestsTable from "@/components/admin/PaymentRequestsTable";
-import AdminBankDetails from "@/components/admin/AdminBankDetails";
-import PriceRequestModal from "@/components/admin/PriceRequestModal";
-import PriceRequestsHistory from "@/components/admin/PriceRequestsHistory";
+import ProductForm from "@/components/seller/ProductForm";
+import ProductList from "@/components/seller/ProductList";
+import BankDetailsForm from "@/components/seller/BankDetailsForm";
+import SellerOrders from "@/components/seller/SellerOrders";
+import PriceRequestsPanel from "@/components/seller/PriceRequestsPanel";
+import KycVerification from "@/components/seller/KycVerification";
 
-type Tab =
-  | "overview"
-  | "sellers"
-  | "resellers"
-  | "products"
-  | "orders"
-  | "pricing"
-  | "payments"
-  | "bankdetails"
-  | "pricerequests";
+type Tab = "listings" | "orders" | "bank" | "pricerequests" | "kyc";
 
-export default function AdminDashboard() {
+export default function SellerDashboard() {
   const router = useRouter();
   const params = useParams();
   const locale = params.locale as string;
 
   const [user, setUser] = useState<any>(null);
-  const [tab, setTab] = useState<Tab>("overview");
-  const [checking, setChecking] = useState(true);
-  const [adjustProduct, setAdjustProduct] = useState<any>(null);
-  const [priceReqProduct, setPriceReqProduct] = useState<any>(null);
+  const [tab, setTab] = useState<Tab>("listings");
   const [refreshKey, setRefreshKey] = useState(0);
+  const [checking, setChecking] = useState(true);
 
   useEffect(() => {
     fetch("/api/users/me")
@@ -45,7 +29,7 @@ export default function AdminDashboard() {
         return r.json();
       })
       .then((d) => {
-        if (d.user.role !== "admin") {
+        if (d.user.role !== "seller") {
           router.push(`/${locale}`);
           return;
         }
@@ -69,15 +53,11 @@ export default function AdminDashboard() {
   }
 
   const tabs: { key: Tab; label: string }[] = [
-    { key: "overview", label: "📊 Overview" },
-    { key: "sellers", label: "📦 Sellers" },
-    { key: "resellers", label: "🔁 Resellers/Customers" },
-    { key: "products", label: "🛍️ Products" },
-    { key: "orders", label: "🧾 Orders" },
-    { key: "pricing", label: "💹 Bulk Pricing" },
-    { key: "pricerequests", label: "📩 Price Requests" },
-    { key: "payments", label: "💸 Payment Requests" },
-    { key: "bankdetails", label: "🏦 Bank Details" },
+    { key: "listings", label: "My Listings" },
+    { key: "orders", label: "My Orders" },
+    { key: "pricerequests", label: "Price Requests" },
+    { key: "kyc", label: "KYC" },
+    { key: "bank", label: "Bank Details" },
   ];
 
   return (
@@ -86,7 +66,7 @@ export default function AdminDashboard() {
       <div className="relative z-10">
         <nav className="flex items-center justify-between px-6 py-4 border-b border-galaxy-400/20">
           <div>
-            <h1 className="font-bold text-white">🛡️ Admin Dashboard</h1>
+            <h1 className="font-bold text-white">📦 Seller Dashboard</h1>
             <p className="text-xs text-galaxy-400">Welcome, {user?.name}</p>
           </div>
           <div className="flex items-center gap-3">
@@ -110,65 +90,34 @@ export default function AdminDashboard() {
             ))}
           </div>
 
-          {tab === "overview" && <StatsCards />}
-
-          {tab === "sellers" && (
-            <div className="glass-card rounded-2xl p-6">
-              <SellersTable />
-            </div>
-          )}
-
-          {tab === "resellers" && (
-            <div className="glass-card rounded-2xl p-6">
-              <ResellersTable />
-            </div>
-          )}
-
-          {tab === "products" && (
-            <div className="glass-card rounded-2xl p-6">
-              <ProductsTable key={refreshKey} onAdjust={setAdjustProduct} />
+          {tab === "listings" && (
+            <div className="space-y-6 max-w-5xl">
+              <ProductForm onCreated={() => setRefreshKey((k) => k + 1)} />
+              <ProductList refreshKey={refreshKey} />
             </div>
           )}
 
           {tab === "orders" && (
-            <div className="glass-card rounded-2xl p-6">
-              <OrdersTable />
+            <div className="max-w-5xl">
+              <SellerOrders />
             </div>
           )}
-
-          {tab === "pricing" && <BulkAdjust />}
 
           {tab === "pricerequests" && (
-            <div className="glass-card rounded-2xl p-6">
-              <PriceRequestsHistory />
+            <div className="max-w-3xl">
+              <PriceRequestsPanel />
             </div>
           )}
 
-          {tab === "payments" && (
-            <div className="glass-card rounded-2xl p-6">
-              <PaymentRequestsTable />
+          {tab === "kyc" && <KycVerification />}
+
+          {tab === "bank" && (
+            <div className="max-w-md">
+              <BankDetailsForm />
             </div>
           )}
-
-          {tab === "bankdetails" && <AdminBankDetails />}
         </div>
       </div>
-
-      {adjustProduct && (
-        <PriceAdjustModal
-          product={adjustProduct}
-          onClose={() => setAdjustProduct(null)}
-          onSaved={() => setRefreshKey((k) => k + 1)}
-        />
-      )}
-
-      {priceReqProduct && (
-        <PriceRequestModal
-          product={priceReqProduct}
-          onClose={() => setPriceReqProduct(null)}
-          onSent={() => setRefreshKey((k) => k + 1)}
-        />
-      )}
     </main>
   );
 }
