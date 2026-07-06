@@ -9,8 +9,9 @@ import BankDetailsForm from "@/components/seller/BankDetailsForm";
 import SellerOrders from "@/components/seller/SellerOrders";
 import PriceRequestsPanel from "@/components/seller/PriceRequestsPanel";
 import KycVerification from "@/components/seller/KycVerification";
+import ShopifyConnect from "@/components/seller/ShopifyConnect";
 
-type Tab = "listings" | "orders" | "bank" | "pricerequests" | "kyc";
+type Tab = "listings" | "orders" | "bank" | "pricerequests" | "kyc" | "shopify";
 
 export default function SellerDashboard() {
   const router = useRouter();
@@ -56,6 +57,7 @@ export default function SellerDashboard() {
     { key: "listings", label: "My Listings" },
     { key: "orders", label: "My Orders" },
     { key: "pricerequests", label: "Price Requests" },
+    { key: "shopify", label: "🔗 Shopify" },
     { key: "kyc", label: "KYC" },
     { key: "bank", label: "Bank Details" },
   ];
@@ -106,6 +108,12 @@ export default function SellerDashboard() {
           {tab === "pricerequests" && (
             <div className="max-w-3xl">
               <PriceRequestsPanel />
+            </div>
+          )}
+
+          {tab === "shopify" && (
+            <div className="max-w-md">
+              <ShopifyConnect />
             </div>
           )}
 
