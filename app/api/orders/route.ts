@@ -82,8 +82,7 @@ export async function GET(req: NextRequest) {
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-
-    let orders;
+    let orders: any[];
     if (user.role === "seller") {
       orders = await sql`
         SELECT o.*, p.name as product_name, p.listing_code, r.name as placed_by_name
