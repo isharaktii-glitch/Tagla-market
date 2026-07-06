@@ -8,13 +8,20 @@ type Product = {
   base_price: string;
   admin_price_adjust_percent: string;
   display_price: string;
+  seller_id: string;
   seller_name: string;
   category_name: string | null;
   status: string;
   images: string[] | null;
 };
 
-export default function ProductsTable({ onAdjust }: { onAdjust: (p: Product) => void }) {
+export default function ProductsTable({
+  onAdjust,
+  onPriceRequest,
+}: {
+  onAdjust: (p: Product) => void;
+  onPriceRequest: (p: Product) => void;
+}) {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -42,7 +49,7 @@ export default function ProductsTable({ onAdjust }: { onAdjust: (p: Product) => 
             <th className="py-2 pr-4">Seller Price</th>
             <th className="py-2 pr-4">Admin %</th>
             <th className="py-2 pr-4">Customer Price</th>
-            <th className="py-2 pr-4">Action</th>
+            <th className="py-2 pr-4">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -58,12 +65,20 @@ export default function ProductsTable({ onAdjust }: { onAdjust: (p: Product) => 
               <td className="py-3 pr-4 text-accent">{p.admin_price_adjust_percent || 0}%</td>
               <td className="py-3 pr-4 text-green-400 font-bold">Rs. {parseFloat(p.display_price).toLocaleString()}</td>
               <td className="py-3 pr-4">
-                <button
-                  onClick={() => onAdjust(p)}
-                  className="text-xs px-3 py-1 rounded-full bg-accent/20 text-accent hover:bg-accent/30"
-                >
-                  Adjust Price
-                </button>
+                <div className="flex gap-2 flex-wrap">
+                  <button
+                    onClick={() => onAdjust(p)}
+                    className="text-xs px-3 py-1 rounded-full bg-accent/20 text-accent hover:bg-accent/30"
+                  >
+                    Adjust Price
+                  </button>
+                  <button
+                    onClick={() => onPriceRequest(p)}
+                    className="text-xs px-3 py-1 rounded-full bg-blue-500/20 text-blue-400 hover:bg-blue-500/30"
+                  >
+                    Send Price Request
+                  </button>
+                </div>
               </td>
             </tr>
           ))}
