@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import { useRouter, useParams } from "next/navigation";
+import PaymentMethodSelector from "./PaymentMethodSelector";
 
 type Product = {
   id: string;
@@ -17,6 +19,10 @@ export default function OrderModal({
   onClose: () => void;
   onPlaced: (orderCode: string) => void;
 }) {
+  const router = useRouter();
+  const params = useParams();
+  const locale = params.locale as string;
+
   const [resellerMode, setResellerMode] = useState(false);
   const [marginPercent, setMarginPercent] = useState("10");
   const [customerName, setCustomerName] = useState("");
@@ -25,6 +31,7 @@ export default function OrderModal({
   const [lat, setLat] = useState<number | null>(null);
   const [lng, setLng] = useState<number | null>(null);
   const [quantity, setQuantity] = useState("1");
+  const [paymentMethod, setPaymentMethod] = useState("bank_transfer");
   const [locating, setLocating] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -71,6 +78,7 @@ export default function OrderModal({
           quantity: parseInt(quantity || "1"),
           reseller_margin_percent: margin,
           is_reseller_mode: resellerMode,
+          payment_method: paymentMethod,
         }),
       });
       const data = await res.json();
@@ -79,6 +87,12 @@ export default function OrderModal({
         setSaving(false);
         return;
       }
+
+      if (paymentMethod === "payhere") {
+        router.push(`/${locale}/checkout/${data.order.id}`);
+        return;
+      }
+
       onPlaced(data.order.order_code);
     } catch {
       setError("Network error");
@@ -147,6 +161,8 @@ export default function OrderModal({
             className="w-full px-4 py-2 rounded-lg bg-galaxy-900/60 border border-galaxy-400/30 focus:border-accent outline-none text-white text-sm"
           />
 
+          <PaymentMethodSelector value={paymentMethod} onChange={setPaymentMethod} />
+
           <div className="bg-galaxy-900/60 rounded-lg p-3 text-sm">
             <div className="flex justify-between text-galaxy-300">
               <span>Unit price</span>
@@ -165,7 +181,7 @@ export default function OrderModal({
               Cancel
             </button>
             <button type="submit" disabled={saving} className="flex-1 btn-primary py-2 rounded-lg text-sm disabled:opacity-50">
-              {saving ? "Placing..." : "Confirm Order"}
+              {saving ? "Placing..." : paymentMethod === "payhere" ? "Continue to Payment" : "Confirm Order"}
             </button>
           </div>
         </form>
