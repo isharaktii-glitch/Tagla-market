@@ -1,0 +1,72 @@
+"use client";
+import { useState, useEffect } from "react";
+
+type BankInfo = {
+  source: "seller" | "admin" | "none";
+  bank_name?: string;
+  bank_acc_no?: string;
+  bank_acc_name?: string;
+};
+
+export default function PaymentMethodSelector({
+  value,
+  onChange,
+  productId,
+}: {
+  value: string;
+  onChange: (method: string) => void;
+  productId: string;
+}) {
+  const [bankInfo, setBankInfo] = useState<BankInfo | null>(null);
+
+  useEffect(() => {
+    fetch(`/api/products/${productId}/payment-info`)
+      .then((r) => r.json())
+      .then((d) => setBankInfo(d));
+  }, [productId]);
+
+  return (
+    <div className="space-y-2">
+      <label className="text-sm text-galaxy-300">Payment Method</label>
+      <div className="grid grid-cols-3 gap-2">
+        <button
+          type="button"
+          onClick={() => onChange("cod")}
+          className={`py-2 rounded-lg text-xs font-semibold ${value === "cod" ? "bg-accent text-galaxy-950" : "bg-galaxy-800/60 text-galaxy-300"}`}
+        >
+          💵 Cash on Delivery
+        </button>
+        <button
+          type="button"
+          onClick={() => onChange("bank_transfer")}
+          className={`py-2 rounded-lg text-xs font-semibold ${value === "bank_transfer" ? "bg-accent text-galaxy-950" : "bg-galaxy-800/60 text-galaxy-300"}`}
+        >
+          🏦 Bank Transfer
+        </button>
+        <button
+          type="button"
+          onClick={() => onChange("payhere")}
+          className={`py-2 rounded-lg text-xs font-semibold ${value === "payhere" ? "bg-accent text-galaxy-950" : "bg-galaxy-800/60 text-galaxy-300"}`}
+        >
+          💳 Card (PayHere)
+        </button>
+      </div>
+
+      {value === "bank_transfer" && bankInfo && bankInfo.source !== "none" && (
+        <div className="bg-galaxy-900/60 rounded-lg p-3 text-xs text-galaxy-300 space-y-1">
+          <p className="text-accent font-semibold mb-1">
+            {bankInfo.source === "seller" ? "Transfer directly to Seller:" : "Transfer to:"}
+          </p>
+          <p>{bankInfo.bank_name} — {bankInfo.bank_acc_name}</p>
+          <p>Acc No: {bankInfo.bank_acc_no}</p>
+        </div>
+      )}
+
+      {value === "bank_transfer" && bankInfo?.source === "none" && (
+        <p className="text-xs text-yellow-400">
+          No bank details available yet for this payment method. Please choose another method.
+        </p>
+      )}
+    </div>
+  );
+}
