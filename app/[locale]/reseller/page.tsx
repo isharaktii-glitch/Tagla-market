@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import StarField from "@/components/StarField";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import NotificationBell from "@/components/NotificationBell";
+import PinnedNotificationsBar from "@/components/PinnedNotificationsBar";
 import ProductBrowser from "@/components/reseller/ProductBrowser";
 import OrderModal from "@/components/reseller/OrderModal";
 import MyOrders from "@/components/reseller/MyOrders";
@@ -78,12 +80,15 @@ export default function ResellerDashboard() {
             <p className="text-xs text-galaxy-400">Welcome, {user?.name}</p>
           </div>
           <div className="flex items-center gap-3">
+            <NotificationBell />
             <LanguageSwitcher />
             <button onClick={handleLogout} className="text-sm text-galaxy-300 hover:text-white">
               Logout
             </button>
           </div>
         </nav>
+
+        <PinnedNotificationsBar />
 
         <div className="px-6 py-6">
           {successMsg && (
