@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import StarField from "@/components/StarField";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import NotificationBell from "@/components/NotificationBell";
+import PinnedNotificationsBar from "@/components/PinnedNotificationsBar";
 import ProductForm from "@/components/seller/ProductForm";
 import ProductList from "@/components/seller/ProductList";
 import BankDetailsForm from "@/components/seller/BankDetailsForm";
@@ -72,12 +74,15 @@ export default function SellerDashboard() {
             <p className="text-xs text-galaxy-400">Welcome, {user?.name}</p>
           </div>
           <div className="flex items-center gap-3">
+            <NotificationBell />
             <LanguageSwitcher />
             <button onClick={handleLogout} className="text-sm text-galaxy-300 hover:text-white">
               Logout
             </button>
           </div>
         </nav>
+
+        <PinnedNotificationsBar />
 
         <div className="px-6 py-6">
           <div className="flex gap-2 mb-6 flex-wrap">
