@@ -16,12 +16,21 @@ export default function SellersTable() {
   const [sellers, setSellers] = useState<Seller[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  function load() {
+    setLoading(true);
     fetch("/api/admin/users")
       .then((r) => r.json())
       .then((d) => setSellers(d.sellers || []))
       .finally(() => setLoading(false));
-  }, []);
+  }
+
+  useEffect(() => { load(); }, []);
+
+  async function handleDelete(id: string, name: string) {
+    if (!confirm(`Delete seller "${name}"? This will also delete all their products and cannot be undone.`)) return;
+    await fetch(`/api/admin/users/${id}`, { method: "DELETE" });
+    load();
+  }
 
   if (loading) return <p className="text-galaxy-400 text-sm">Loading...</p>;
   if (sellers.length === 0) return <p className="text-galaxy-400 text-sm">No sellers registered yet.</p>;
@@ -37,6 +46,7 @@ export default function SellersTable() {
             <th className="py-2 pr-4">Products</th>
             <th className="py-2 pr-4">KYC</th>
             <th className="py-2 pr-4">Joined</th>
+            <th className="py-2 pr-4">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -57,6 +67,14 @@ export default function SellersTable() {
               </td>
               <td className="py-3 pr-4 text-galaxy-500 text-xs">
                 {new Date(s.created_at).toLocaleDateString()}
+              </td>
+              <td className="py-3 pr-4">
+                <button
+                  onClick={() => handleDelete(s.id, s.name)}
+                  className="text-xs px-3 py-1 rounded-full bg-red-500/20 text-red-400 hover:bg-red-500/30"
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
