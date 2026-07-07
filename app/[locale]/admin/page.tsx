@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import StarField from "@/components/StarField";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import NotificationBell from "@/components/NotificationBell";
 import StatsCards from "@/components/admin/StatsCards";
 import SellersTable from "@/components/admin/SellersTable";
 import ResellersTable from "@/components/admin/ResellersTable";
@@ -15,18 +16,15 @@ import AdminBankDetails from "@/components/admin/AdminBankDetails";
 import PriceRequestModal from "@/components/admin/PriceRequestModal";
 import PriceRequestsHistory from "@/components/admin/PriceRequestsHistory";
 import KycPanel from "@/components/admin/KycPanel";
+import ShopifyConnect from "@/components/admin/ShopifyConnect";
+import AnnouncementForm from "@/components/admin/AnnouncementForm";
+import CategoryManager from "@/components/admin/CategoryManager";
+import AdminProductForm from "@/components/admin/AdminProductForm";
 
 type Tab =
-  | "overview"
-  | "sellers"
-  | "resellers"
-  | "products"
-  | "orders"
-  | "pricing"
-  | "payments"
-  | "bankdetails"
-  | "pricerequests"
-  | "kyc";
+  | "overview" | "sellers" | "resellers" | "products" | "orders" | "pricing"
+  | "payments" | "bankdetails" | "pricerequests" | "kyc" | "shopify"
+  | "announcements" | "categories" | "listproduct";
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -75,12 +73,16 @@ export default function AdminDashboard() {
     { key: "sellers", label: "📦 Sellers" },
     { key: "resellers", label: "🔁 Resellers/Customers" },
     { key: "products", label: "🛍️ Products" },
+    { key: "listproduct", label: "➕ List Product" },
+    { key: "categories", label: "📁 Categories" },
     { key: "orders", label: "🧾 Orders" },
     { key: "pricing", label: "💹 Bulk Pricing" },
     { key: "pricerequests", label: "📩 Price Requests" },
     { key: "payments", label: "💸 Payment Requests" },
     { key: "bankdetails", label: "🏦 Bank Details" },
     { key: "kyc", label: "🪪 KYC" },
+    { key: "shopify", label: "🔗 Shopify" },
+    { key: "announcements", label: "📢 Announcements" },
   ];
 
   return (
@@ -93,6 +95,7 @@ export default function AdminDashboard() {
             <p className="text-xs text-galaxy-400">Welcome, {user?.name}</p>
           </div>
           <div className="flex items-center gap-3">
+            <NotificationBell />
             <LanguageSwitcher />
             <button onClick={handleLogout} className="text-sm text-galaxy-300 hover:text-white">
               Logout
@@ -137,6 +140,14 @@ export default function AdminDashboard() {
             </div>
           )}
 
+          {tab === "listproduct" && (
+            <div className="max-w-3xl">
+              <AdminProductForm onCreated={() => setRefreshKey((k) => k + 1)} />
+            </div>
+          )}
+
+          {tab === "categories" && <CategoryManager />}
+
           {tab === "orders" && (
             <div className="glass-card rounded-2xl p-6">
               <OrdersTable />
@@ -160,6 +171,18 @@ export default function AdminDashboard() {
           {tab === "bankdetails" && <AdminBankDetails />}
 
           {tab === "kyc" && <KycPanel />}
+
+          {tab === "shopify" && (
+            <div className="max-w-md">
+              <ShopifyConnect />
+            </div>
+          )}
+
+          {tab === "announcements" && (
+            <div className="max-w-2xl">
+              <AnnouncementForm />
+            </div>
+          )}
         </div>
       </div>
 
