@@ -20,6 +20,7 @@ export async function POST(req: NextRequest) {
       quantity,
       reseller_margin_percent,
       is_reseller_mode,
+      payment_method,
     } = await req.json();
 
     if (!product_id || !customer_name || !customer_contact) {
@@ -43,19 +44,22 @@ export async function POST(req: NextRequest) {
       : 0;
 
     const orderCode = generateOrderCode();
+    const paymentMethod = payment_method || "bank_transfer";
 
     const result = await sql`
       INSERT INTO orders (
         order_code, product_id, seller_id, placed_by_id, placed_by_role,
         customer_name, customer_contact, customer_address,
         customer_location_lat, customer_location_lng,
-        quantity, unit_price, total_price, reseller_margin_percent, commission_amount
+        quantity, unit_price, total_price, reseller_margin_percent, commission_amount,
+        payment_method
       )
       VALUES (
         ${orderCode}, ${product_id}, ${product.seller_id}, ${user.id}, ${user.role},
         ${customer_name}, ${customer_contact}, ${customer_address || null},
         ${customer_location_lat || null}, ${customer_location_lng || null},
-        ${qty}, ${unitPrice.toFixed(2)}, ${totalPrice.toFixed(2)}, ${margin}, ${commissionAmount.toFixed(2)}
+        ${qty}, ${unitPrice.toFixed(2)}, ${totalPrice.toFixed(2)}, ${margin}, ${commissionAmount.toFixed(2)},
+        ${paymentMethod}
       )
       RETURNING *
     `;
@@ -82,6 +86,7 @@ export async function GET(req: NextRequest) {
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+
     let orders: any[];
     if (user.role === "seller") {
       orders = await sql`
