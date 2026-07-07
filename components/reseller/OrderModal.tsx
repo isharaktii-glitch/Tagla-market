@@ -160,9 +160,9 @@ export default function OrderModal({
             onChange={(e) => setQuantity(e.target.value)}
             className="w-full px-4 py-2 rounded-lg bg-galaxy-900/60 border border-galaxy-400/30 focus:border-accent outline-none text-white text-sm"
           />
-
-          <PaymentMethodSelector value={paymentMethod} onChange={setPaymentMethod} />
-
+          
+          
+         <PaymentMethodSelector value={paymentMethod} onChange={setPaymentMethod} productId={product.id} />
           <div className="bg-galaxy-900/60 rounded-lg p-3 text-sm">
             <div className="flex justify-between text-galaxy-300">
               <span>Unit price</span>
